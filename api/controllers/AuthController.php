@@ -8,7 +8,7 @@ class AuthController{
     public function register(){try{$name=Validator::string($_POST['name']??'','Vārds');$email=Validator::email($_POST['email']??'');$pwd=Validator::password($_POST['password']??'');}catch(\Exception $e){Response::json(['success'=>false,'message'=>$e->getMessage()],400);} $hash=password_hash($pwd,PASSWORD_DEFAULT);try{
             $this->pdo->prepare('INSERT INTO users(name,email,password) VALUES (?,?,?)')->execute([$name,$email,$hash]);
         }catch(\PDOException $e){
-            if($e->getCode()==23000){ // duplicate
+            if($e->getCode()==23000){ 
                 Response::json(['success'=>false,'message'=>'E-pasts jau eksistē'],409);
             }
             Response::json(['success'=>false,'message'=>'DB kļūda'],500);

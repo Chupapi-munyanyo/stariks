@@ -1,12 +1,8 @@
-// Common utilities across pages
-// Card context helpers
 window.cardContext={
   get(){return localStorage.getItem('activeCardId');},
   set(id){localStorage.setItem('activeCardId',id);} };
-// Reload page when active card changes
 window.addEventListener('storage',e=>{if(e.key==='activeCardId') location.reload();});
 
-// Global color palette (teal / green theme)
 window.chartPalette = {
   teal: '#025864',
   green: '#00D47E',
@@ -16,7 +12,6 @@ window.chartPalette = {
   array(){return [this.green,this.teal,this.lightGreen,this.darkTeal,this.darkGreen,'#7ff0c2','#38ff9d'];}
 };
 
-// Helper for consistent Chart.js options across pages
 window.buildChartOptions = function(cfg = {}) {
   return {
     plugins: {
@@ -38,14 +33,11 @@ window.buildChartOptions = function(cfg = {}) {
   };
 };
 
-// Apply global defaults if Chart is already loaded
 if (window.Chart) {
   Chart.defaults.color = '#000';
   Chart.defaults.font.family = 'Roboto, sans-serif';
 }
 
-// Simple form validation helper
-// rules: { fieldName: value => true/false }
 window.validateForm = function(form, rules) {
   for (const [name, check] of Object.entries(rules)) {
     const el = form.elements[name];

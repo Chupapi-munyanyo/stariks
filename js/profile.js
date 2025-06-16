@@ -1,4 +1,3 @@
-/* profile.js – edit account only */
 (() => {
   const API_SAVE = '../api/index.php/user/profile';
   const $ = id => document.getElementById(id);
@@ -25,7 +24,6 @@
         const data = await res.json();
         if (!data.success) throw new Error(data.message || 'Neizdevās saglabāt datus');
 
-        // clear password fields
         inputOldPwd.value = '';
         inputNewPwd.value = '';
 

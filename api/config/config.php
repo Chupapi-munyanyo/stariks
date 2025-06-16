@@ -1,6 +1,4 @@
 <?php
-// Database configuration constants
-// Adjust according to your local MySQL setup.
 
 define('DB_HOST', 'localhost');
 define('DB_PORT', '3306');

@@ -1,5 +1,4 @@
 <?php
-// Returns PDO connection. Adjust credentials to your local setup.
 $host = 'localhost';
 $db   = 'stariks';
 $user = 'root';

@@ -19,12 +19,12 @@ public function create(){try{$ticker=strtoupper(trim($_POST['ticker']??''));if(!
         if($qty<=0||$invested<=0||$current<0) throw new \Exception('Nepareizi dati');
         $card=(int)($_POST['card_id']??0);
         if(!$card) throw new \Exception('Nav kartes');
-        // verify card ownership
+        
         $chk=$this->pdo->prepare('SELECT 1 FROM credit_cards WHERE id=? AND user_id=?');
         $chk->execute([$card,$this->uid]);
         if(!$chk->fetchColumn()) throw new \Exception('Karte nav atrasta');
         $this->pdo->prepare('INSERT INTO investments(user_id,card_id,ticker,name,type,quantity,invested_amount,current_value) VALUES (?,?,?,?,?,?,?,?)')->execute([$this->uid,$card,$ticker,$name,$type,$qty,$invested,$current]);
-            // deduct balance
+            
             $this->pdo->prepare('UPDATE credit_cards SET balance_amount=balance_amount-? WHERE id=? AND user_id=?')->execute([$invested,$card,$this->uid]);
             Response::json(['success'=>true]);}catch(\Exception $e){Response::json(['success'=>false,'message'=>$e->getMessage()],400);} }
 public function delete(){ $id=(int)($_POST['id']??0);$card=(int)($_POST['card_id']??0);

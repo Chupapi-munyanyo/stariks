@@ -1,4 +1,3 @@
-// card.js – show single card details and mark as active
 (function(){
   const params=new URLSearchParams(location.search);
   const id=params.get('id');

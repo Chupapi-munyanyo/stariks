@@ -18,7 +18,7 @@ class ImportController
         }
         $this->uid = (int)$_SESSION['user_id'];
         $this->pdo = Database::get();
-        // Composer autoload (PhpSpreadsheet)
+
         $autoload = __DIR__ . '/../vendor/autoload.php';
         if (file_exists($autoload)) require_once $autoload;
     }
@@ -45,16 +45,16 @@ class ImportController
             $this->importCards($spreadsheet->getSheetByName('cards') ?? $spreadsheet->getSheet(0));
             $card=(int)($_POST['card_id'] ?? 0);
             if($card<=0){
-                // fallback first card
+                
                 $cardStmt=$this->pdo->prepare('SELECT id FROM credit_cards WHERE user_id=? ORDER BY id LIMIT 1');
                 $cardStmt->execute([$this->uid]);
                 $card=(int)$cardStmt->fetchColumn();
             } else {
-                // validate card ownership
+                
                 $chk=$this->pdo->prepare('SELECT 1 FROM credit_cards WHERE id=? AND user_id=?');
                 $chk->execute([$card,$this->uid]);
                 if(!$chk->fetchColumn()) {
-                    // fall back to first card
+                    
                     $cardStmt=$this->pdo->prepare('SELECT id FROM credit_cards WHERE user_id=? ORDER BY id LIMIT 1');
                     $cardStmt->execute([$this->uid]);
                     $card=(int)$cardStmt->fetchColumn();
@@ -74,7 +74,7 @@ class ImportController
     {
         if (!$sheet) return;
         foreach ($sheet->toArray(null, true, true, true) as $i => $row) {
-            if ($i === 1) continue; // header
+            if ($i === 1) continue; 
             [$bank, $last4, $bal] = [$row['B'] ?? '', $row['C'] ?? '', $row['D'] ?? ''];
             if (!$bank || !$last4) continue;
             $stmt = $this->pdo->prepare('INSERT INTO credit_cards(user_id,bank_name,last4,balance_amount) VALUES (?,?,?,?)');
@@ -85,7 +85,6 @@ class ImportController
     private function importTransactions($sheet, int $cardId): void
     {
         if (!$sheet) return;
-        // Prepare category cache
         $catStmt = $this->pdo->prepare('SELECT id FROM categories WHERE user_id=? AND card_id=? AND type=? AND label=?');
         $catInsert = $this->pdo->prepare('INSERT INTO categories(user_id,card_id,type,label) VALUES (?,?,?,?)');
         $txInsert = $this->pdo->prepare('INSERT INTO transactions(user_id,card_id,category_id,amount,happened_on,note) VALUES (?,?,?,?,?,?)');
@@ -93,7 +92,6 @@ class ImportController
             if ($i === 1) continue;
             [$label, $type, $amount, $date, $note] = [$row['B'] ?? '', strtolower($row['C'] ?? ''), $row['D'] ?? 0, $row['E'] ?? '', $row['F'] ?? null];
             if (!$label || !in_array($type, ['income', 'expense'])) continue;
-            // get or create category
             $catStmt->execute([$this->uid, $cardId, $type, $label]);
             $cid = $catStmt->fetchColumn();
             if (!$cid) {

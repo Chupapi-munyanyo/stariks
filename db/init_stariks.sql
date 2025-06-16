@@ -1,8 +1,7 @@
--- Schema for the "stariks" finance app
 CREATE DATABASE IF NOT EXISTS stariks DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE stariks;
 
--- Users
+
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -11,7 +10,6 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- Categories (income / expense labels per-user & per-card)
 CREATE TABLE IF NOT EXISTS categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -22,7 +20,6 @@ CREATE TABLE IF NOT EXISTS categories (
     UNIQUE KEY u_user_card_label (user_id,card_id,type,label)
 ) ENGINE=InnoDB;
 
--- Transactions
 CREATE TABLE IF NOT EXISTS transactions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -37,7 +34,6 @@ CREATE TABLE IF NOT EXISTS transactions (
     INDEX (card_id)
 ) ENGINE=InnoDB;
 
--- Credit Cards
 CREATE TABLE IF NOT EXISTS credit_cards (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -49,7 +45,6 @@ CREATE TABLE IF NOT EXISTS credit_cards (
     UNIQUE KEY u_user_last4 (user_id,last4)
 ) ENGINE=InnoDB;
 
--- Investments
 CREATE TABLE IF NOT EXISTS investments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -65,7 +60,6 @@ CREATE TABLE IF NOT EXISTS investments (
     FOREIGN KEY (card_id) REFERENCES credit_cards(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- Credit Card Loans
 CREATE TABLE IF NOT EXISTS credit_card_loans (
     id INT AUTO_INCREMENT PRIMARY KEY,
     card_id INT NOT NULL,
@@ -79,7 +73,6 @@ CREATE TABLE IF NOT EXISTS credit_card_loans (
     FOREIGN KEY (card_id) REFERENCES credit_cards(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- Budgets
 CREATE TABLE IF NOT EXISTS budgets (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,

@@ -19,7 +19,7 @@ class ReceiptsController{
         }elseif($type==='year'){
             $start= new \DateTime($today->format('Y-01-01'));
             $end  = new \DateTime($today->format('Y-12-31'));
-        }else{ //month default
+        }else{ 
             $start=new \DateTime($today->format('Y-m-01'));
             $end=clone $start; $end->modify('last day of this month');
         }
@@ -31,7 +31,7 @@ class ReceiptsController{
         $card=(int)($_GET['card_id']??0);
         [$from,$to]=$this->periodBounds($type);
 
-        // Budgets with spent per category between dates
+        
         $stmt=$this->pdo->prepare("SELECT b.id,b.period,c.label,c.id AS cat_id,b.limit_amount,IFNULL(SUM(t.amount),0) spent
             FROM budgets b
             JOIN categories c ON c.id=b.category_id AND c.user_id=b.user_id
@@ -43,7 +43,7 @@ class ReceiptsController{
         if($card>0) $tmpParams[]=$card;
         $stmt->execute($tmpParams);
         $budgets=$stmt->fetchAll();
-        // attach transactions for each budget
+        
         $txStmt=$this->pdo->prepare("SELECT id,note AS description,amount,happened_on FROM transactions WHERE user_id=? AND category_id=? AND happened_on BETWEEN ? AND ?".($card>0?" AND card_id=?":"")." ORDER BY happened_on");
         foreach($budgets as &$b){
             $txParams=[$this->uid,$b['cat_id'],$from,$to];
@@ -53,14 +53,14 @@ class ReceiptsController{
             $b['remaining']=$b['limit_amount']-$b['spent'];
         }
 
-        // investments (no date filter; assume current holdings)
+        
         $inv=$this->pdo->prepare("SELECT id,ticker,name,quantity,invested_amount,current_value,(current_value-invested_amount) diff FROM investments WHERE user_id=?".($card>0?" AND card_id=?":""));
         $invParams=[$this->uid];
         if($card>0) $invParams[]=$card;
         $inv->execute($invParams);
         $investments=$inv->fetchAll();
 
-        // transactions flat list
+        
         $tx=$this->pdo->prepare("SELECT t.id,c.label AS category,t.amount,t.happened_on,t.note FROM transactions t JOIN categories c ON c.id=t.category_id WHERE t.user_id=? AND t.happened_on BETWEEN ? AND ?".($card>0?" AND t.card_id=?":"")." ORDER BY t.happened_on");
         $txParams=[$this->uid,$from,$to];
         if($card>0) $txParams[]=$card;
@@ -73,11 +73,10 @@ class ReceiptsController{
     public function export(){
         $period=$_GET['period']??'month';
         $card=(int)($_GET['card_id']??0);
-        $report=$_GET['report']??'all'; // budgets|investments|transactions|all
-        $type=$_GET['type']??'xlsx'; // xlsx|doc
+        $report=$_GET['report']??'all'; 
+        $type=$_GET['type']??'xlsx'; 
         [$from,$to]=$this->periodBounds($period);
 
-        // collect data
         $data=['budgets'=>[], 'investments'=>[], 'transactions'=>[]];
         if(in_array($report,['budgets','all'])){
             $stmt=$this->pdo->prepare("SELECT c.label,b.limit_amount,IFNULL(SUM(t.amount),0) spent,(b.limit_amount-IFNULL(SUM(t.amount),0)) remaining
@@ -104,7 +103,6 @@ class ReceiptsController{
         }
 
         if($type==='doc'){
-            // very simple Word: output HTML with correct mime
             header('Content-Type: application/msword');
             header('Content-Disposition: attachment; filename="report_'.date('Ymd').'.doc"');
             echo "<html><body>";
@@ -122,7 +120,7 @@ class ReceiptsController{
                     foreach($data[$key] as $row){
                         echo "<tr><td>{$row['ticker']}</td><td>{$row['name']}</td><td>{$row['quantity']}</td><td>{$row['invested_amount']}</td><td>{$row['current_value']}</td><td>{$row['diff']}</td></tr>";
                     }
-                }else{ // transactions
+                }else{ 
                     echo "<tr><th>Datums</th><th>Kategorija</th><th>Summa</th><th>Piezīme</th></tr>";
                     foreach($data[$key] as $row){
                         $note=htmlspecialchars($row['note']??'');
@@ -134,7 +132,6 @@ class ReceiptsController{
             echo "</body></html>";
             exit;
         }
-        // default Excel export
         $autoload=__DIR__.'/../vendor/autoload.php';
         if(!file_exists($autoload)) Response::json(['success'=>false,'message'=>'Composer autoload nenoklāts'],500);
         require_once $autoload;

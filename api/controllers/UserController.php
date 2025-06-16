@@ -9,10 +9,9 @@ class UserController {
     public function __construct() {
         require_once __DIR__.'/../config/auth.php';
         $this->pdo = require __DIR__.'/../config/db.php';
-        $this->uid = auth_check(); // expects function to return user id or error out
+        $this->uid = auth_check(); 
     }
 
-    // GET /user/me – public profile
     public function me() {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
             Response::json(['success'=>false,'message'=>'Method not allowed'],405);
@@ -27,7 +26,6 @@ class UserController {
         }
     }
 
-    // GET/POST /user/profile
     public function profile() {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $stmt = $this->pdo->prepare('SELECT name, email FROM users WHERE id=?');
@@ -48,7 +46,6 @@ class UserController {
                 Response::json(['success'=>false,'message'=>'Vārds un e-pasts ir obligāti']);
             }
 
-            // fetch current data
             $stmt = $this->pdo->prepare('SELECT name, email, password FROM users WHERE id=?');
             $stmt->execute([$this->uid]);
             $current = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -56,12 +53,10 @@ class UserController {
                 Response::json(['success'=>false,'message'=>'Lietotājs nav atrasts'],404);
             }
 
-            // verify current password
             if (!password_verify($oldPwd, $current['password'])) {
                 Response::json(['success'=>false,'message'=>'Nepareiza pašreizējā parole'],401);
             }
 
-            // build dynamic SET parts only for changed fields
             $set = [];
             $params = [];
             if ($name !== $current['name']) {
@@ -78,7 +73,6 @@ class UserController {
             }
 
             if (empty($set)) {
-                // nothing to update
                 Response::json(['success'=>true,'message'=>'Nav izmaiņu']);
             }
 

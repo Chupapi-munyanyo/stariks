@@ -14,7 +14,6 @@ function fill(rows){
     sel.innerHTML = rows.map(c=>`<option value='${c.id}'>${c.bank_name} ••••${c.last4}</option>`).join('');
   }
 }
-// populate card select for loans modal
 
 async function listLoans(){const r=await fetch('../api/index.php/cardloans/list',{credentials:'include'});return (await r.json()).loans||[];}
 let loanCharts=new Map();
@@ -57,7 +56,6 @@ document.getElementById('cTable').addEventListener('click',async e=>{
   if(e.target.matches('button[data-id]')){const id=e.target.dataset.id;if(confirm('Dzēst karti?')){await fetch('../api/index.php/cards/delete',{credentials:'include',method:'POST',body:new URLSearchParams({id})});load();}}});
 
 document.getElementById('lForm').addEventListener('submit',async e=>{e.preventDefault();const fd=new FormData(e.target);
-  // ensure numeric fields are properly formatted
   ['amount','monthly_payment','paid_off_amount'].forEach(k=>{
     const v=parseFloat(fd.get(k)||0).toFixed(2);
     fd.set(k,v);
@@ -68,7 +66,6 @@ document.getElementById('lTable').addEventListener('click',async e=>{if(e.target
 
 document.getElementById('logoutBtn').addEventListener('click',async()=>{await fetch('../api/index.php/auth/logout',{credentials:'include'});location.href='../login.html';});
 
-// Excel import
 const importForm=document.getElementById('importForm');
 if(importForm){
   importForm.addEventListener('submit',async e=>{

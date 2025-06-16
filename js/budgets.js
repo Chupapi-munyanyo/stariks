@@ -38,7 +38,7 @@ function fillTable(rows){const tb=document.querySelector('#bTable tbody');const 
 async function load(){const active=cardContext.get();const [cats,allBuds]=await Promise.all([getCats(),getBudgets()]);
   const buds = active ? allBuds.filter(b=>String(b.card_id)===String(active)) : allBuds;const sel=document.querySelector('#bForm select[name=category_id]');sel.innerHTML=cats.filter(c=>c.type==='expense').map(c=>`<option value='${c.id}'>${c.label}</option>`).join('');fillTable(buds);}load();
 
-// set default month when opening modal
+// set default month 
 const bModalEl=document.getElementById('bModal');
 bModalEl.addEventListener('show.bs.modal',()=>{
   const monthInput=document.querySelector('#bForm input[name=period]');

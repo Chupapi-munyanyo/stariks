@@ -20,7 +20,7 @@ public function create(){
             $card=(int)($_POST['card_id']??0);
             if(!$cat||$limit<=0||!$card) throw new \Exception('Nepareizi dati');
             $period=$_POST['period']??date('Y-m');
-            // verify card ownership
+            
             $chk=$this->pdo->prepare('SELECT id FROM credit_cards WHERE id=? AND user_id=?');
             $chk->execute([$card,$this->uid]);
             if(!$chk->fetch()) throw new \Exception('Nepareiza karte');

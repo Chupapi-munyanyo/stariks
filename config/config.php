@@ -1,5 +1,4 @@
 <?php
-// Database configuration
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'stariks');
 define('DB_USER', 'root');
@@ -17,11 +16,10 @@ class Database {
                 DB_PASS
             );
             
-            // Set error mode to exception
+           
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             
-            // Create database if it doesn't exist
             $this->pdo->exec("CREATE DATABASE IF NOT EXISTS `" . DB_NAME . "`;");
             $this->pdo->exec("USE `" . DB_NAME . "`;");
             
@@ -43,7 +41,6 @@ class Database {
     }
 }
 
-// Function to get database connection
 function getDB() {
     return Database::getInstance()->getConnection();
 }

@@ -1,4 +1,4 @@
-// Simple i18n toggle between Latvian (lv) and English (en)
+//i18n toggle between Latvian (lv) and English (en)
 (function(){
   const dict={
     en:{dashboard:'Dashboard',transactions:'Transactions',budgets:'Budgets',investments:'Investments',cards:'Cards',receipts:'Reports',logout:'Logout'},

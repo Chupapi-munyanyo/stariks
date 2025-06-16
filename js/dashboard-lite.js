@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded',()=>{
  function draw(res){
    if(!res.success){alert(res.message);return;}
    const d=res.data;
-   // Calculate totals and last month for % change
    let totalIncome = 0, totalExpense = 0, lastIncome = 0, lastExpense = 0;
    const months = (d.monthlyTotals||[]).map(row => row.month);
    (d.monthlyTotals||[]).forEach((row,i,arr) => {
@@ -15,11 +14,10 @@ document.addEventListener('DOMContentLoaded',()=>{
    });
    const balance = parseFloat(res.data.cardsBalance ?? 0);
    const lastBalance = balance;
-   // Calculate % changes
    const incomeChange = lastIncome ? ((totalIncome-lastIncome)/lastIncome*100).toFixed(1) : 0;
    const expenseChange = lastExpense ? ((totalExpense-lastExpense)/lastExpense*100).toFixed(1) : 0;
    const balanceChange = lastBalance ? ((balance-lastBalance)/Math.abs(lastBalance)*100).toFixed(1) : 0;
-   // Fill summary boxes
+
    document.getElementById('balanceValue').textContent = `€${balance.toFixed(2)}`;
    document.getElementById('incomeValue').textContent = `€${totalIncome.toFixed(2)}`;
    document.getElementById('expenseValue').textContent = `€${totalExpense.toFixed(2)}`;
@@ -29,14 +27,14 @@ document.addEventListener('DOMContentLoaded',()=>{
    document.getElementById('incomeSub').className = 'summary-sub ' + (incomeChange >= 0 ? 'summary-lime' : 'summary-red');
    document.getElementById('expenseSub').textContent = `${expenseChange >= 0 ? '+' : ''}${expenseChange}% no pagājušā mēneša`;
    document.getElementById('expenseSub').className = 'summary-sub ' + (expenseChange >= 0 ? 'summary-lime' : 'summary-red');
-   // Draw charts
+   
    bar(d.monthlyTotals);
    pie('expensesPie',d.expenseByCategory,'Izdevumi');
    pie('incomePie',d.incomeByCategory,'Ienākumi');
    table(d.latest);
  }
  function pie(id,rows,label){
-    if(!rows || !rows.length) return; // nothing to draw
+    if(!rows || !rows.length) return; 
     new Chart(document.getElementById(id),{
      type:'pie',
      data:{
@@ -65,7 +63,7 @@ document.addEventListener('DOMContentLoaded',()=>{
  function bar(rows){
     if(!rows || !rows.length) return;
     const ctx = document.getElementById('monthlyBar').getContext('2d');
-   // Create green gradient for bars
+
    const incomeColor = '#025864'; // teal
     const expenseColor = '#00D47E'; // bright green
    new Chart(ctx,{

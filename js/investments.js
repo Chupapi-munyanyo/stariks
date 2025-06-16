@@ -2,17 +2,17 @@ function renderTradingView(symbol){
   const infoWrapper=document.querySelector('#symbol-info .tradingview-widget-container');
   const chartWrapper=document.querySelector('#advanced-chart .tradingview-widget-container');
   if(!infoWrapper||!chartWrapper) return;
-  // clear previous
+  
   infoWrapper.innerHTML='<div class="tradingview-widget-container__widget"></div>';
   chartWrapper.innerHTML='<div class="tradingview-widget-container__widget" style="width:100%;height:100%"></div>';
-  // Symbol Info widget
+  
   const infoScript=document.createElement('script');
   infoScript.type='text/javascript';
   infoScript.src='https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js';
   infoScript.async=true;
   infoScript.innerHTML=JSON.stringify({symbol:symbol,width:"100%",locale:"en",colorTheme:"light",isTransparent:true});
   infoWrapper.appendChild(infoScript);
-  // Advanced Chart
+  
   const chartScript=document.createElement('script');
   chartScript.type='text/javascript';
   chartScript.src='https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
@@ -70,7 +70,7 @@ function refreshChart(){
   const rows=allRows;
   const now=new Date();
   if(currentFrame==='week'||currentFrame==='week'){
-    // same as before (per ticker invested vs quantity)
+    
     const labels=rows.map(r=>r.ticker.toUpperCase());
     const invested=rows.map(r=>parseFloat(r.invested_amount));
     const qty=rows.map(r=>parseFloat(r.quantity));
@@ -79,7 +79,7 @@ function refreshChart(){
       {label:'Ieguldīts (€)',data:invested,backgroundColor:'rgba(34,139,34,0.7)',yAxisID:'y1'}
     ],'Bilances Vēsture pēc Ticker');
   }else if(currentFrame==='month'){
-    // current month investments per ticker invested amount
+    
     const monthRows=rows.filter(r=>{
       const d=new Date(r.date);
       return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth();
@@ -101,7 +101,7 @@ async function load(){const cid=cardContext.get();allRows=await list();if(cid) a
 load();
 
 const iForm=document.getElementById('iForm');
-// auto-calc quantity when user enters invested_amount or current_value
+
 const investedInput = iForm.querySelector('input[name="invested_amount"]');
 const qtyInput = iForm.querySelector('input[name="quantity"]');
 const priceInput = iForm.querySelector('input[name="current_value"]');
@@ -121,7 +121,7 @@ investedInput?.addEventListener('input',updateSummary);
 
 priceInput?.addEventListener('input',updateSummary);
 
-// Auto-complete ticker details
+
 const tickerInput=iForm.querySelector('input[name="ticker"]');
 if(tickerInput){
   tickerInput.addEventListener('blur',async ()=>{
@@ -141,7 +141,7 @@ if(tickerInput){
 
 iForm.addEventListener('submit',async e=>{
   e.preventDefault();
-  // custom validation: price positive and at least one of qty or invested positive
+  
   const price=parseFloat(priceInput.value);
   const qty=parseFloat(qtyInput.value);
   const inv=parseFloat(investedInput.value);
@@ -149,7 +149,6 @@ iForm.addEventListener('submit',async e=>{
     alert('Ievadiet derīgas vērtības: cena un daudzums VAI ieguldījums.');
     return;
   }
-  // compute missing field
   if((isNaN(inv)||inv<=0)&&qty>0){
     investedInput.value=(qty*price).toFixed(2);
   } else if((isNaN(qty)||qty<=0)&&inv>0){

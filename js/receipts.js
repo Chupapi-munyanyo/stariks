@@ -16,7 +16,7 @@ async function load(){
   const res=await fetch(`../api/index.php/receipts/data?period=${p}${cid?`&card_id=${cid}`:''}`,{credentials:'include'});
   const data=await res.json();
   if(!data.success){alert(data.message||'Kļūda');return;}
-  // visibility helpers
+ 
   const showBud = (chosen==='budgets'||chosen==='all');
   const showInv = (chosen==='investments'||chosen==='all');
   const showTx  = (chosen==='transactions'||chosen==='all');
