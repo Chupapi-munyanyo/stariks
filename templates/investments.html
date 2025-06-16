@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="lv"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Investīcijas – Stariks</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/style.css" rel="stylesheet"></head><body class="bg-light"><nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom mb-4">
+ <div class="container">
+  <a class="navbar-brand" href="dashboard.html">Stariks<span class="text-success">.</span></a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"><span class="navbar-toggler-icon"></span></button>
+  <div class="collapse navbar-collapse" id="mainNav">
+   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item"><a class="nav-link" href="dashboard.html" data-i18n="dashboard">Panelis</a></li>
+    <li class="nav-item"><a class="nav-link" href="transactions.html" data-i18n="transactions">Transakcijas</a></li>
+    <li class="nav-item"><a class="nav-link" href="budgets.html" data-i18n="budgets">Budžeti</a></li>
+    <li class="nav-item"><a class="nav-link active" href="investments.html" data-i18n="investments">Investīcijas</a></li>
+    <li class="nav-item"><a class="nav-link" href="cards.html" data-i18n="cards">Kartes</a></li>
+    <li class="nav-item"><a class="nav-link" href="receipts.html" data-i18n="receipts">Atskaites</a></li>
+   </ul>
+   <a class="nav-link px-2" href="profile.html" title="Profils" style="font-size:1.3em" data-i18n-title="profile"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16"><path d="M11 10a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 12a5.978 5.978 0 0 1-4.468-2.09c.03-1.99 4-3.084 4-3.084s3.97 1.094 4 3.084A5.978 5.978 0 0 1 8 13zm0-1a4.978 4.978 0 0 0 3.468-1.316C11.44 9.94 8 9 8 9s-3.44.94-3.468 2.684A4.978 4.978 0 0 0 8 12z"/></svg></a>
+   <button id="langBtn" class="btn btn-outline-light btn-sm me-2">LV</button>
+   <button id="logoutBtn" class="btn btn-outline-light btn-sm" data-i18n="logout">Izrakstīties</button>
+  </div>
+ </div>
+</nav>
+<!-- TradingView core library -->
+<script src="https://s3.tradingview.com/tv.js"></script>
+<!-- Init widgets after library is ready -->
+<script>
+window.addEventListener('DOMContentLoaded',function(){
+  new TradingView.widget({
+    "container_id": "tickerTape",
+    "symbols": [
+      { "proName": "NASDAQ:TSLA" },
+      { "proName": "NASDAQ:AAPL" },
+      { "proName": "NASDAQ:NVDA" },
+      { "proName": "NASDAQ:MSFT" },
+      { "proName": "NASDAQ:AMZN" },
+      { "proName": "NASDAQ:GOOGL" },
+      { "proName": "NASDAQ:META" },
+      { "proName": "NYSE:BRK.B" },
+      { "proName": "NYSE:LLY" },
+      { "proName": "NYSE:UNH" },
+      { "proName": "NYSE:V" },
+      { "proName": "NYSE:WMT" }
+    ],
+    "showSymbolLogo": true,
+    "colorTheme": "light",
+    "isTransparent": false,
+    "displayMode": "adaptive",
+    "locale": "en"
+  });
+});
+</script>
+  <!-- TradingView Ticker Tape Widget END -->
+</nav>
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-3 gap-3 flex-wrap">
+    <h2>Investīcijas</h2>
+    <button class="btn btn-lime" data-bs-toggle="modal" data-bs-target="#iModal">Pievienot</button>
+  </div>
+  <section id="symbol-info" class="mb-4">
+    <div class="tradingview-widget-container mb-4">
+      <div id="symbolInfo"></div>
+    </div>
+  </section>
+  <!-- TradingView Symbol Info Widget (JS version) -->
+  <script>
+window.addEventListener('DOMContentLoaded',function(){
+  new TradingView.widget({
+      "symbol": "NASDAQ:AAPL",
+      "width": "100%",
+      "locale": "en",
+      "colorTheme": "light",
+      "isTransparent": true,
+      "container_id": "symbolInfo"
+      });
+});
+  </script>
+  <!-- /TradingView Symbol Info Widget -->
+
+<!-- TradingView Widgets Start -->
+<nav id="ticker-tape" class="mb-4">
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>{
+      "symbols":[{"proName":"NASDAQ:TSLA"},{"proName":"NASDAQ:AAPL"},{"proName":"NASDAQ:NVDA"},{"proName":"NASDAQ:MSFT"},{"proName":"NASDAQ:AMZN"},{"proName":"NASDAQ:GOOGL"},{"proName":"NASDAQ:META"},{"proName":"NYSE:BRK.B"},{"proName":"NYSE:LLY"},{"proName":"NYSE:UNH"},{"proName":"NYSE:V"},{"proName":"NYSE:WMT"}],
+      "showSymbolLogo":true,"colorTheme":"light","isTransparent":false,"displayMode":"adaptive","locale":"en"}
+    </script>
+  </div>
+</nav>
+<div class="row">
+  <div class="col-12 mb-4" id="advanced-chart">
+    <div class="tradingview-widget-container" style="height:100%;width:100%">
+      <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>{
+        "autosize":true,"symbol":"NASDAQ:AAPL","interval":"D","timezone":"Etc/UTC","theme":"light","style":"1","locale":"en","allow_symbol_change":true,"calendar":false,"support_host":"https://www.tradingview.com"}
+      </script>
+    </div>
+  </div>
+</div>
+<div class="chart-box mb-4">
+  <div class="d-flex justify-content-end mb-2">
+    <div class="btn-group" role="group" id="timeframeGrp">
+      <button type="button" class="btn btn-outline-dark btn-sm active" data-frame="week">Nedēļa</button>
+      <button type="button" class="btn btn-outline-dark btn-sm" data-frame="month">Mēnesis</button>
+      <button type="button" class="btn btn-outline-dark btn-sm" data-frame="year">Gads</button>
+    </div>
+  </div>
+  <canvas id="investmentsChart" height="120"></canvas>
+</div>
+
+
+  <div class="table-responsive">
+  <table class="table table-striped" id="iTable">
+    <thead>
+      <tr><th>Ticker</th><th>Nosaukums</th><th>Tips</th><th>Daudzums</th><th>Ieguldīts (€)</th><th>Pašreizējā vērtība</th><th>Peļņa/Zaud.</th><th></th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  </div>
+<div class="modal fade" id="iModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form class="modal-content" id="iForm">
+      <div class="modal-header"><h5 class="modal-title">Jauna investīcija</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <div class="row g-3 mb-3"><div class="col-md-6"><label class="form-label">Ticker</label><input name="ticker" class="form-control text-uppercase" required></div><div class="col-md-6"><label class="form-label">Nosaukums</label><input name="name" class="form-control" required></div></div>
+        <div class="row g-3 mb-3"><div class="col-md-6"><label class="form-label">Tips</label><select name="type" class="form-select"><option value="stocks">Akcijas</option><option value="bonds">Obligācijas</option><option value="crypto">Kripto</option><option value="funds">Fondi</option><option value="realestate">Nekust.</option><option value="other">Cits</option></select></div>
+        <div class="mb-3"><label class="form-label">Daudzums</label><input name="quantity" type="number" step="0.0001" class="form-control"></div>
+        <div class="mb-3"><label class="form-label">Pirkuma datums</label><input name="date" type="date" class="form-control" value="${new Date().toISOString().split('T')[0]}" required></div>
+        <div class="mb-3"><label class="form-label">Ieguldītā summa (€)</label><input name="invested_amount" type="number" step="0.01" class="form-control"></div>
+        <div class="mb-3"><label class="form-label">Pašreizējā vērtība (€)</label><input name="current_value" type="number" step="0.01" class="form-control" required></div>
+        <div id="calcInfo" class="small text-muted"></div>
+      </div>
+      <div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Aizvērt</button><button class="btn btn-lime" type="submit">Saglabāt</button></div>
+    </form>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script><script src="../js/common.js"></script>
+<script src="../js/investments.js"></script><script src="../js/lang.js"></script>
+</body></html>

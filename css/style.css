@@ -1,0 +1,158 @@
+/* Stariks main theme */
+:root{
+    --background-color:#FFFFFF;
+    --primary-text-color:#000000;
+    --accent-green:#32CD32;
+    --border-color:#E0E0E0;
+    --box-shadow:0 2px 4px rgba(0,0,0,0.06);
+
+    --lime:#c6ff00;
+    --dark:#111;
+    
+    --chart-green1: #90EE90; /* light green */
+    --chart-green2: #32CD32; 
+    --chart-green3: #008000; /* green */
+    --chart-green4: #228B22; /* forest green */
+    --chart-palegreen: #98FB98;
+    --chart-coral: #F08080;
+    --chart-white:#FFF;
+    --chart-black: #000;
+}
+
+/* Chart container for eye-candy look */
+.chart-box {
+    background: #fff;
+    border-radius: 18px;
+    border: 3px solid #000;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+    padding: 1.2rem 1.2rem 1.2rem 1.2rem;
+    margin-bottom: 1.5rem;
+    transition: box-shadow 0.2s;
+}
+.chart-box:hover {
+    box-shadow: none;
+}
+
+/* Summary/statistic box style */
+.summary-box {
+    background: #fff;
+    border-radius: 18px;
+    border: 3px solid #000;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+    padding: 1.2rem 1.2rem 0.8rem 1.2rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    min-width: 210px;
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.summary-box .summary-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 0.5rem;
+}
+.summary-box .summary-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 0.2rem;
+}
+.summary-box .summary-icon {
+    font-size: 1.3em;
+    margin-right: 0.5em;
+    vertical-align: middle;
+}
+.summary-box .summary-lime {
+    color: var(--neon-lime, #39FF14)!important;
+    text-shadow: none;
+}
+.summary-box .summary-red {
+    color: #FF6B6B!important;
+    text-shadow: none;
+}
+.summary-box .summary-sub {
+    font-size: 0.95em;
+    margin-top: 0.2rem;
+    color: #333;
+}
+
+
+/* Chart.js legend/title simple styling */
+.chart-box .chartjs-render-monitor {
+    background: transparent !important;
+    border-radius: 16px;
+}
+
+.chart-legend {
+    color:#000;font-weight:bold;
+    text-shadow: 0 0 8px var(--neon-lime, #39FF14);
+}
+
+.chart-title {
+    color: var(--neon-lime, #39FF14)!important;
+    font-weight: bold;
+    text-shadow: 0 0 8px var(--neon-lime, #39FF14);
+}
+
+/* For white backgrounds (if needed) */
+.bg-white {
+    background: #fff !important;
+    color: #181A1B !important;
+}
+
+body{font-family:"Segoe UI",sans-serif;background:var(--background-color);color:var(--primary-text-color);} 
+
+/* Mobile responsive tweaks */
+@media (max-width: 768px){
+  .chart-box{padding:0.8rem;border-width:2px;margin-bottom:1rem;}
+  .chart-box canvas{height:260px!important;}
+  .summary-box{flex:1 1 100%;margin-bottom:1rem;}
+  .summary-value{font-size:1.6em;}
+}
+.text-lime{color:var(--lime)!important;}
+.btn-lime{background:var(--lime);border:2px solid #000;color:#000;font-weight:600;box-shadow:none;}
+.btn-lime:hover{background:#d6ff33;color:#000;box-shadow:none;}
+.btn-lime{background:var(--lime);border:2px solid #000;color:#000;font-weight:600;}
+.btn-lime:hover{background:#d6ff33;color:#000;}
+.hero{background:#fff;}
+.navbar-dark{background:#000!important;}
+.navbar-dark .navbar-brand{color:var(--accent-green)!important;font-weight:700;}
+.navbar-dark .nav-link{color:#fff!important;}
+.navbar-dark .nav-link.active,.navbar-dark .nav-link:hover{color:var(--lime)!important;}
+.table-striped>tbody>tr:nth-of-type(odd)>*{background-color:#f2f2f2;}
+.feature-card{transition:transform .2s;}
+.feature-card:hover{transform:translateY(-4px);} 
+
+/* TradingView widget sections */
+#ticker-tape,#symbol-info,#advanced-chart{
+    background:var(--background-color);
+    border:1px solid var(--border-color);
+    border-radius:8px;
+    padding:1rem;
+    margin-bottom:1.5rem;
+}
+#ticker-tape{padding:0;}
+#advanced-chart{min-height:500px;padding:0;}
+#advanced-chart .tradingview-widget-container{
+    display:flex;
+    align-items:stretch;
+    justify-content:center;
+    position:relative;
+    box-sizing:content-box;
+    font-family:-apple-system, BlinkMacSystemFont,"Trebuchet MS",Roboto,Ubuntu,sans-serif;
+    margin:0 auto!important;
+    padding:0!important;
+    width:900px !important;
+    height:500px;
+}
+.chart-box{margin-bottom:2rem;}
+/* Ensure charts keep a reasonable size on any screen */
+.chart-box canvas{max-width:100%!important;height:280px!important;}
+@media (min-width:992px){ /* desktop larger */
+  .chart-box canvas{height:320px!important;}
+}
+#iTable{margin-top:2rem;}
+

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kategorijas – Stariks</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="dashboard.html">Stariks</a>
+    <div class="ms-auto">
+      <a class="btn btn-sm btn-outline-secondary" href="transactions.html">Transakcijas</a>
+      <a class="nav-link px-2" href="profile.html" title="Profils" style="font-size:1.3em"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16"><path d="M11 10a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 12a5.978 5.978 0 0 1-4.468-2.09c.03-1.99 4-3.084 4-3.084s3.97 1.094 4 3.084A5.978 5.978 0 0 1 8 13zm0-1a4.978 4.978 0 0 0 3.468-1.316C11.44 9.94 8 9 8 9s-3.44.94-3.468 2.684A4.978 4.978 0 0 0 8 12z"/></svg></a>
+      <button id="logoutBtn" class="btn btn-sm btn-outline-danger">Izrakstīties</button>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Kategorijas</h2>
+      <table class="table" id="catTable"><thead><tr><th>Tips</th><th>Nosaukums</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="col-md-6">
+      <h2>Pievienot</h2>
+      <form id="catForm">
+        <div class="mb-3"><label class="form-label">Tips</label>
+          <select name="type" class="form-select"><option value="expense">Izdevumi</option><option value="income">Ienākumi</option></select></div>
+        <div class="mb-3"><label class="form-label">Nosaukums</label>
+          <input name="label" class="form-control" required maxlength="50"></div>
+        <button class="btn btn-primary" type="submit">Saglabāt</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/categories.js"></script>
+</body>
+</html>
