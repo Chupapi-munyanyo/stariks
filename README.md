@@ -89,5 +89,3 @@ mysql -u root -p < db/init_stariks.sql
 
 ---
 
-## Licence
-MIT Licence
